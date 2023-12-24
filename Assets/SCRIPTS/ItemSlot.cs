@@ -21,10 +21,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         }
     }
  
- 
- 
- 
- 
+    
  
     public void OnDrop(PointerEventData eventData)
     {
@@ -36,7 +33,19 @@ public class ItemSlot : MonoBehaviour, IDropHandler
  
             DragDrop.itemBeingDragged.transform.SetParent(transform);
             DragDrop.itemBeingDragged.transform.localPosition = new Vector2(0, 0);
- 
+
+
+            if (transform.CompareTag("QuickSlot") == false)
+            {
+                DragDrop.itemBeingDragged.GetComponent<InventoryItem>().isInsideQuickSlot = false;
+                InventorySystem.Instance.ReCaculateList();
+            }
+
+            if (transform.CompareTag("QuickSlot"))
+            {
+                DragDrop.itemBeingDragged.GetComponent<InventoryItem>().isInsideQuickSlot = true;
+                InventorySystem.Instance.ReCaculateList();
+            }
         }
  
  

@@ -80,26 +80,31 @@ public class CraftingSystem : MonoBehaviour
         // refresh it
         StartCoroutine(calculate());
 
-        RefreshNeededItems();
+        
     }
 
 
     public IEnumerator calculate()
     {
-        yield return new WaitForSeconds(1f);
-        
+        yield return 0;
         InventorySystem.Instance.ReCaculateList();
+        RefreshNeededItems();
     }
 
     // Update is called once per frame
     void Update()
     {
-        RefreshNeededItems();
+        
         
         if (Input.GetKeyDown(KeyCode.C) && !isOpen)
         {
             craftingScreenUI.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            
+            SelectionManager.Instance.DisableSelection();
+            SelectionManager.Instance.GetComponent<SelectionManager>().enabled = false;
+            
             isOpen = true;
  
         }
@@ -111,13 +116,17 @@ public class CraftingSystem : MonoBehaviour
             if (!InventorySystem.Instance.isOpen)
             {
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+                
+                SelectionManager.Instance.EnableSelection();
+                SelectionManager.Instance.GetComponent<SelectionManager>().enabled = true;
             }
             
             isOpen = false;
         }
     }
 
-    private void RefreshNeededItems()
+    public void RefreshNeededItems()
     {
         int stone_count = 0;
         int stick_count = 0;

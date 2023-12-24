@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2914602983638911937}
   - component: {fileID: 5730268656874223257}
   - component: {fileID: 2901631651066274383}
+  - component: {fileID: 4946058114195443112}
   m_Layer: 5
   m_Name: Stick
   m_TagString: Slot
@@ -102,3 +103,23 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &4946058114195443112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3533845610096439030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e58692989ac7f4fa203141b3d33e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTrashable: 1
+  thisName: Stick
+  thisDescription: A dry stick
+  thisFunctionality: Used for crafting
+  isConsumable: 0
+  healthEffect: 0
+  caloriesEffect: 0
+  hydrationEffect: 0
