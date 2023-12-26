@@ -125,7 +125,7 @@ public class InventorySystem : MonoBehaviour
         pickupAlert.SetActive(false);
     }
 
-    public bool CheckIfFull()
+    public bool CheckSlotAvailable(int emptyNeeded)
     {
         int counter = 0;
 
@@ -137,7 +137,7 @@ public class InventorySystem : MonoBehaviour
             }
         }
 
-        if (counter == 21)
+        if (counter == 21 - emptyNeeded)
         {
             return true;
         }

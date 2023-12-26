@@ -16,6 +16,11 @@ public class SelectionManager : MonoBehaviour
 
     public Image centerDotImage;
     public Image handIcon;
+
+    public bool handIsVisible;
+    
+    public GameObject selectedTree;
+    public GameObject chopHolder;
     
 
     private void Awake()
@@ -45,6 +50,25 @@ public class SelectionManager : MonoBehaviour
             var selectionTransform = hit.transform;
 
             InteractableObject interactable = selectionTransform.GetComponent<InteractableObject>();
+            
+            ChoppableTree choppableTree = selectionTransform.GetComponent<ChoppableTree>();
+
+            if (choppableTree && choppableTree.playerInRange)
+            {
+                choppableTree.canBeChopped = true;
+                selectedTree = choppableTree.gameObject;
+                chopHolder.SetActive(true);
+            }
+            else
+            {
+                if (selectedTree != null)
+                {
+                    selectedTree.gameObject.GetComponent<ChoppableTree>().canBeChopped = false;
+                    selectedTree = null;
+                    chopHolder.gameObject.SetActive(false);
+                }
+            }
+            
  
             if (interactable && interactable.playerInRange)
             {
@@ -57,6 +81,15 @@ public class SelectionManager : MonoBehaviour
                 {
                     centerDotImage.gameObject.SetActive(false);
                     handIcon.gameObject.SetActive(true);
+                    
+                    handIsVisible = true;
+                }
+                else
+                {
+                    centerDotImage.gameObject.SetActive(true);
+                    handIcon.gameObject.SetActive(false);
+                    
+                    handIsVisible = false;
                 }
             }
             else    // there is a hit, but not interactable
@@ -65,6 +98,8 @@ public class SelectionManager : MonoBehaviour
                 interaction_Info_UI.SetActive(false);
                 centerDotImage.gameObject.SetActive(true);
                 handIcon.gameObject.SetActive(false);
+                
+                handIsVisible = false;
             }
  
         }
@@ -74,6 +109,8 @@ public class SelectionManager : MonoBehaviour
             interaction_Info_UI.SetActive(false);
             centerDotImage.gameObject.SetActive(true);
             handIcon.gameObject.SetActive(false);
+            
+            handIsVisible = false;
         }
     }
     

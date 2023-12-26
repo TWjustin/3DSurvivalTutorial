@@ -1,5 +1,81 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3788508852606888790
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8525271872916069916}
+  - component: {fileID: 5878125310508060268}
+  - component: {fileID: 1052518666774190487}
+  - component: {fileID: 8038101828294857525}
+  m_Layer: 0
+  m_Name: tree_base
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8525271872916069916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788508852606888790}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9169323810232236206}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5878125310508060268
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788508852606888790}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 13, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1052518666774190487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788508852606888790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a68dffefa1ddf6d4ca73942557f68a07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInRange: 0
+  canBeChopped: 0
+  treeMaxHealth: 10
+  treeHealth: 0
+--- !u!65 &8038101828294857525
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3788508852606888790}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 12, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &9163375535998646606
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,11 +103,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9163375535998646606}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 22.183046, y: 0.5005264, z: 150.20956}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8525271872916069916}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,7 +173,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.64
+  m_Radius: 1.6
   m_Height: 13.553929
   m_Direction: 1
   m_Center: {x: 0.01, y: 5.69, z: 0.02}
@@ -112,4 +189,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab090926d7934284aa5912b8d396a438, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInRange: 0
   ItemName: Tree
