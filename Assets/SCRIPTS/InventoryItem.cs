@@ -5,37 +5,40 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
- 
-public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
+
+public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler,
+    IPointerUpHandler
 {
     // --- Is this item trashable --- //
     public bool isTrashable;
- 
+
     // --- Item Info UI --- //
     private GameObject itemInfoUI;
- 
+
     private Text itemInfoUI_itemName;
     private Text itemInfoUI_itemDescription;
     private Text itemInfoUI_itemFunctionality;
- 
+
     public string thisName, thisDescription, thisFunctionality;
- 
+
     // --- Consumption --- //
     private GameObject itemPendingConsumption;
     public bool isConsumable;
- 
+
     public float healthEffect;
     public float caloriesEffect;
     public float hydrationEffect;
-    
+
     // --- Equipping --- //
     public bool isEquippable;
     private GameObject itemPendingEquipping;
     public bool isInsideQuickSlot;
 
     public bool isSelected;
- 
- 
+
+    public bool isUseable;
+
+
     private void Start()
     {
         itemInfoUI = InventorySystem.Instance.ItemInfoUI;
@@ -64,17 +67,17 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         itemInfoUI_itemDescription.text = thisDescription;
         itemInfoUI_itemFunctionality.text = thisFunctionality;
     }
- 
+
     // Triggered when the mouse exits the area of the item that has this script.
     public void OnPointerExit(PointerEventData eventData)
     {
         itemInfoUI.SetActive(false);
     }
- 
+
     // Triggered when the mouse is clicked over the item that has this script.
     public void OnPointerDown(PointerEventData eventData)
     {
-        //Right Mouse Button Click on
+        // Right Mouse Button Click on
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             if (isConsumable)
@@ -83,16 +86,63 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 itemPendingConsumption = gameObject;
                 consumingFunction(healthEffect, caloriesEffect, hydrationEffect);
             }
-            
+
             if (isEquippable && isInsideQuickSlot == false && EquipSystem.Instance.CheckIfFull() == false)
             {
                 EquipSystem.Instance.AddToQuickSlots(gameObject);
                 isInsideQuickSlot = true;
             }
+
+            if (isUseable)
+            {
+                ConstructionManager.Instance.itemToBeDestroyed = gameObject;
+                gameObject.SetActive(false);
+                UseItem();
+            }
         }
     }
- 
-    // Triggered when the mouse button is released over the item that has this script.
+
+    void UseItem()
+    {
+        itemInfoUI.SetActive(false);
+        
+        InventorySystem.Instance.isOpen = false;
+        InventorySystem.Instance.inventoryScreenUI.SetActive(false);
+        
+        CraftingSystem.Instance.isOpen = false;
+        CraftingSystem.Instance.craftingScreenUI.SetActive(false);
+        CraftingSystem.Instance.toolsScreenUI.SetActive(false);
+        CraftingSystem.Instance.survivalScreenUI.SetActive(false);
+        CraftingSystem.Instance.refineScreenUI.SetActive(false);
+        CraftingSystem.Instance.constructionScreenUI.SetActive(false);
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        
+        SelectionManager.Instance.EnableSelection();
+        SelectionManager.Instance.enabled = true;
+
+        switch (gameObject.name)
+        {
+            case "Foundation(Clone)":
+                ConstructionManager.Instance.ActivateConstructionPlacement("FoundationModel");
+                break;
+            case "Foundation":      // for testing
+                ConstructionManager.Instance.ActivateConstructionPlacement("FoundationModel");
+                break;
+            case "Wall(Clone)":
+                ConstructionManager.Instance.ActivateConstructionPlacement("WallModel");
+                break;
+            case "Wall":      // for testing
+                ConstructionManager.Instance.ActivateConstructionPlacement("WallModel");
+                break;
+            default:
+                // do nothing
+                break;
+        }
+    }
+
+// Triggered when the mouse button is released over the item that has this script.
     public void OnPointerUp(PointerEventData eventData)
     {
         if (eventData.button == PointerEventData.InputButton.Right)
@@ -103,6 +153,7 @@ public class InventoryItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
                 InventorySystem.Instance.ReCaculateList();
                 CraftingSystem.Instance.RefreshNeededItems();
             }
+            
         }
     }
  

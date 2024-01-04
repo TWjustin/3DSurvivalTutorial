@@ -63,7 +63,7 @@ public class InventorySystem : MonoBehaviour
     void Update()
     {
  
-        if (Input.GetKeyDown(KeyCode.I) && !isOpen)
+        if (Input.GetKeyDown(KeyCode.I) && !isOpen && !ConstructionManager.Instance.inConstructionMode)
         {
  
             Debug.Log("Open inventory");
@@ -97,6 +97,7 @@ public class InventorySystem : MonoBehaviour
 
     public void AddToInventory(string itemName)
     {
+        SoundManager.Instance.PlaySound(SoundManager.Instance.pickupItemSound);
         
         whatSlotToEquip = FindNextEmptySlot();
         itemToAdd = Instantiate(Resources.Load<GameObject>(itemName),
@@ -127,17 +128,17 @@ public class InventorySystem : MonoBehaviour
 
     public bool CheckSlotAvailable(int emptyNeeded)
     {
-        int counter = 0;
+        int emptySlot = 0;
 
         foreach (GameObject slot in slotList)
         {
-            if (slot.transform.childCount > 0)
+            if (slot.transform.childCount <= 0)
             {
-                counter += 1;
+                emptySlot += 1;
             }
         }
 
-        if (counter == 21 - emptyNeeded)
+        if (emptySlot >= emptyNeeded)
         {
             return true;
         }

@@ -7,6 +7,14 @@ TagManager:
   - Slot
   - Pickable
   - QuickSlot
+  - activeConstructable
+  - Ground
+  - Tree
+  - pickable
+  - ghost
+  - placedFoundation
+  - wallGhost
+  - placedWall
   layers:
   - Default
   - TransparentFX
